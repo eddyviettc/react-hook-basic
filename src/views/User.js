@@ -3,13 +3,24 @@ import axios from 'axios'
 
 const User = () => {
     const [users, setUsers] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [isError, setIsError] = useState(false)
 
 
 
     useEffect(async () => {
-        let res = await axios.get('https://reqres.in/api/users?page=1')
-        let data = res && res.data ? res.data.data : []
-        setUsers(data)
+        try {
+            let res = await axios.get('https://reqres.in/api/users?page=1')
+            let data = res && res.data ? res.data.data : []
+            setUsers(data)
+            setIsLoading(false)
+            setIsError(false)
+        } catch (e) {
+            setIsError(true)
+            setIsLoading(false)
+            console.log(e)
+        }
+
     }, [])
 
     return (
@@ -21,7 +32,7 @@ const User = () => {
                 <th>Last name</th>
             </thead>
             <tbody>
-                {users && users.length > 0 &&
+                {isError === false && isLoading === false && users && users.length > 0 &&
                     users.map(item => {
                         return (
                             <tr>
@@ -32,6 +43,18 @@ const User = () => {
                             </tr>
                         )
                     })}
+
+                {isLoading === true
+
+                    && <tr >
+                        <td colspan='5' style={{ 'textAlign': 'center' }}>Loading...</td>
+                    </tr>}
+
+                {isError === true
+
+                    && <tr >
+                        <td colspan='5' style={{ 'textAlign': 'center' }}>Something Wrong...</td>
+                    </tr>}
 
 
             </tbody>
