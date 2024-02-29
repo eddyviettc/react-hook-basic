@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import Nav from './views/Nav.js'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Todo from './views/Todo.js';
+import User from './views/User.js';
 
 function App() {
   const [input, setInput] = useState('Reverie')
@@ -13,6 +14,12 @@ function App() {
     { id: 'todo4', title: 'loving reverie more than yesterday', type: 'Love' },
 
   ])
+  useEffect(() => {
+    console.log('run useEffect if input change')
+  }, [input]);
+  useEffect(() => {
+    console.log('run useEffect if input todos')
+  }, [todos]);
   const handleEventClick = () => {
     if (!input) {
       alert('missing input')
@@ -38,7 +45,8 @@ function App() {
         <Nav />
         <img src={logo} className="App-logo" alt="logo" />
         <h1>Hello {name} from Eddy</h1>
-        <Todo
+        <User />
+        {/* <Todo
           todos={todos.filter(item => item.type === 'Work')}
           title={'Moc'}
           handleDelete={handleDelete}
@@ -49,7 +57,7 @@ function App() {
           handleDelete={handleDelete}
         />
         <input type='text' value={input} onChange={(event) => handleChangeInputName(event)}></input>
-        <button type='button' onClick={() => handleEventClick()}>Click me</button>
+        <button type='button' onClick={() => handleEventClick()}>Click me</button> */}
       </header>
     </div>
   );
