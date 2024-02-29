@@ -1,27 +1,7 @@
 import { useState, useEffect } from "react"
-import axios from 'axios'
-
+import useFetch from "../customize/fetch"
 const User = () => {
-    const [users, setUsers] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [isError, setIsError] = useState(false)
-
-
-
-    useEffect(async () => {
-        try {
-            let res = await axios.get('https://reqres.in/api/users?page=1')
-            let data = res && res.data ? res.data.data : []
-            setUsers(data)
-            setIsLoading(false)
-            setIsError(false)
-        } catch (e) {
-            setIsError(true)
-            setIsLoading(false)
-            console.log(e)
-        }
-
-    }, [])
+    const { data: users, isLoading, isError } = useFetch('https://reqres.in/api/users?page=1')
 
     return (
         <table id="customers">
