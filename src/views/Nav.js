@@ -8,6 +8,7 @@ const Nav = () => {
             <a href="#news">News</a>
             <a href="#contact">Contact</a>
             <a href="#about">About</a>
+            <hr />
         </div>
     )
 }
