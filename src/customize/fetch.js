@@ -11,19 +11,21 @@ const useFetch = (url) => {
         try {
             const fetchdata = async () => {
                 let res = await axios.get(url)
-                let data = res && res.data ? res.data.data : []
+                let data = (res && res.data) ? res.data : []
                 setData(data)
                 setIsLoading(false)
                 setIsError(false)
             }
-            fetchdata()
+            setTimeout(() => {
+                fetchdata()
+            }, 3000);
         } catch (e) {
             setIsError(true)
             setIsLoading(false)
             console.log(e)
         }
 
-    }, [])
+    }, [url])
     return {
         data, isLoading, isError
     }
